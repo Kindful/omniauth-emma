@@ -8,6 +8,8 @@ module OmniAuth
 
       option :name, "emma"
 
+      option :client_redirect_uri
+
       option :client_options, {
         site: "https://login.e2ma.net",
         authorize_url: "https://login.e2ma.net/oauth/authorize",
@@ -19,7 +21,7 @@ module OmniAuth
         super.tap do |params|
           params[:response_type] ||= DEFAULT_RESPONSE_TYPE
           params[:client_id] = client.id
-          params[:redirect_uri] = client.redirect_uri
+          params[:client_redirect_uri] = options.client_redirect_uri
         end
       end
 
