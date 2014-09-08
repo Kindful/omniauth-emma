@@ -1,6 +1,6 @@
 # OmniAuth Emma
 
-Shopify OAuth2 Strategy for OmniAuth 1.0.
+Emma OAuth2 Strategy for OmniAuth 1.0.
 
 ## Installing
 
@@ -14,13 +14,13 @@ Then `bundle install`.
 
 ## Usage
 
-`OmniAuth::Strategies::Shopify` is simply a Rack middleware. Read [the OmniAuth 1.0 docs](https://github.com/intridea/omniauth) for detailed instructions.
+`OmniAuth::Strategies::Emma` is simply a Rack middleware. Read [the OmniAuth 1.0 docs](https://github.com/intridea/omniauth) for detailed instructions.
 
 Here's a quick example, adding the middleware to a Rails app in `config/initializers/omniauth.rb`:
 
 ```ruby
 Rails.application.config.middleware.use OmniAuth::Builder do
-  provider :shopify, ENV['SHOPIFY_API_KEY'], ENV['SHOPIFY_SHARED_SECRET']
+  provider :emma, ENV['CLIENT_ID'], ENV['CLIENT_SECRRET']
 end
 ```
 
