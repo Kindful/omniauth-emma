@@ -21,7 +21,6 @@ module OmniAuth
         super.tap do |params|
           params[:response_type] ||= DEFAULT_RESPONSE_TYPE
           params[:client_id] = client.id
-          params[:redirect_uri] = options.client_redirect_uri
         end
       end
 
