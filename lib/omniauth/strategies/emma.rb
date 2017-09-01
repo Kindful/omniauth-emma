@@ -3,35 +3,29 @@ require 'omniauth/strategies/oauth2'
 module OmniAuth
   module Strategies
     class Emma < OmniAuth::Strategies::OAuth2
-      DEFAULT_RESPONSE_TYPE = 'code'
-      DEFAULT_GRANT = 'authorization_code'
-
+    
       option :name, "emma"
 
-      option :client_redirect_uri
-
       option :client_options, {
-        site: "https://login.e2ma.net",
-        authorize_url: "https://login.e2ma.net/oauth/authorize",
-        token_url: "https://login.e2ma.net/oauth/token" }
+        :site               => "https://login.e2ma.net",
+        :authorize_url      => '/oauth/authorize',
+        :request_token_url  => "/oauth/token"
+      }
 
-      uid { request.params[:code] }
+      uid { access_token.params['emma_id'] }
 
-      def authorize_params
-        super.tap do |params|
-          params[:response_type] ||= DEFAULT_RESPONSE_TYPE
-          params[:client_id] = client.id
-          params[:redirect_uri] = options.client_redirect_uri
-        end
+      info do
+        {
+          'account_ids' => access_token.params['account_ids']
+        }
       end
 
-      def token_params
-        super.tap do |params|
-          params[:grant_type] ||= DEFAULT_GRANT
-          params[:client_id] = client.id
-          params[:client_secret] = client.secret
-        end
+      extra do
+        {
+          raw_info: access_token
+        }
       end
+
     end
   end
 end
