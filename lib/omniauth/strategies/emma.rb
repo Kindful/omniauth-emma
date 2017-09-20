@@ -26,6 +26,18 @@ module OmniAuth
         }
       end
 
+      protected
+
+      # Overriding from omniauth/strategies/oauth2
+      def build_access_token
+        verifier = request.params["code"]
+
+        #Strip query string to prevent redirect_uri mismatch
+        redirect_uri = callback_url.split('?').first
+
+        client.auth_code.get_token(verifier, { redirect_uri: redirect_uri }.merge(token_params.to_hash(symbolize_keys: true)), deep_symbolize(options.auth_token_params))
+      end
+
     end
   end
 end
